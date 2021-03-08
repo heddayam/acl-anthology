@@ -2,19 +2,18 @@
 
 """
 Takes a list of collection IDs as arguments, and outputs a TSV
-(name, Anthology ID, paper title) containing every person who
-is the first author of a paper and has no other papers in the
-Anthology.
+(name, IDs) of every ambiguous author name, followed by all the
+all the IDs that share it.
 
 Place in acl-anthology/bin and run
 
    ./bin/new-authors.py 2020.acl
    
-which returns all first authors who had their first paper at ACL 
-2020. Note that this doesn't ignore future volumes, so if run in
-2024, this will no longer work for 2020.
+which returns all ambiguous authors names that had their paper 
+at ACL 2020. Note that this doesn't ignore future volumes, so 
+if run in 2024, this will no longer work for 2020.
 
-Author: Matt Post
+Author: Mourad Heddaya & Matt Post
 """
 
 import os
@@ -36,6 +35,7 @@ if __name__ == "__main__":
   # header
   print("name", "IDs", sep="\t")
   for name, ids in anthology.people.name_to_ids.items():
+      # if there is more than one ID associated with a name, it is ambiguous
       if len(ids) > 1:
           print(name, "\t".join(ids), sep="\t")
 
