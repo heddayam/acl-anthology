@@ -64,17 +64,20 @@ def main(args):
             n_authors = len(authors)
             for idx, author in enumerate(authors):
                 if n_authors == 1:
+                    # Create new XML author element for author Matt POST
                     new_author = make_simple_element("author", parent=paper)
                     make_simple_element("first", "Matt", parent=new_author)
                     make_simple_element("last", "POST", parent=new_author)
                     # Inserts new author "Matt POST" after current and only other author
                     paper.insert(paper.index(author)+1, new_author)
                 elif idx > 1:
+                    # Remove authors authors 3+ if there are more than 2 authors
                     paper.remove(author)
+                    # Continue to avoid running unnecessary code below for authors 3+
                     continue
+                # Transforms each author's last name to ALL CAPS
                 last = author.find("./last")
                 last.text = last.text.upper()
-
 
         tree = etree.ElementTree(root_node)
         indent(root_node)
